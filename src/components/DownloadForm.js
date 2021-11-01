@@ -1,5 +1,6 @@
+import { getFirestore, doc, setDoc, getDoc, collection } from "@firebase/firestore";
 import React, { Component } from "react";
-import {initialize} from './config'
+import { initialize } from './config'
 
 class DownloadForm extends Component{
     constructor(props){
@@ -21,10 +22,14 @@ class DownloadForm extends Component{
 
     submitHandler=(event)=>{
         event.preventDefault()
-        const db = initialize.firestore();
         console.log(this.state.key)
         console.log(this.state.files)
-        db.collection("key").doc(this.state.key).add({files:this.state.files})
+        const db = getFirestore(initialize)
+        console.log(db)
+        const x = doc(db, "key", "fdfg");
+        setDoc(x, {name:"lalitkaim"});
+        console.log("Document written with ID: ", x.id);
+        // db.collection("key").doc(this.state.key).add({files:this.state.files})
     }
 
     render(){
