@@ -42,5 +42,23 @@
     background-color: #5bd1d7;
     color: #525252;
     width: max-content;
-
+}
+.uploaded{
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.5;
+    top:0px;
+    left: 0;
+    position: fixed;
+    border: 1px solid black;
+}
+.uploaded>div>h3{
+    color: #5bd1d7;
+}
+.uploaded>div{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

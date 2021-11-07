@@ -27,7 +27,7 @@ class DownloadForm extends Component{
             if(snap.data()){
                 this.setState({urls:snap.data().urls, names:snap.data().names, size:snap.data().size})
             }else{
-                console.log("data not exist");
+                alert("This Kaim ID doesn't exist :(")
             }
         })
     }
@@ -51,8 +51,8 @@ class DownloadForm extends Component{
             <div className={classes.mainDiv}>
                 <form onSubmit={this.submitHandler} className={classes.form}>
                     <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 px-2 "+classes.innerDiv}>
-                        <input className={"form-control "+classes.formInput} type="text" onChange={this.inputHandler} value={this.state.key} placeholder="Type a key..."/>
-                        <button type="submit" className={"btn "+classes.submit}>submit</button>
+                        <input className={"form-control "+classes.formInput} type="text" onChange={this.inputHandler} value={this.state.key} placeholder="Enter Your Pointer . . . "/>
+                        <button type="submit" className={"btn "+classes.submit}>Get Files</button>
                     </div>    
                 </form>
                 {
