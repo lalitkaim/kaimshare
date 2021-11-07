@@ -2,6 +2,7 @@ import { getFirestore, doc, setDoc, getDoc, addDoc, collection} from "firebase/f
 import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable} from 'firebase/storage'
 import React, { Component } from "react";
 import { initialize } from './config'
+import classes from './UploadForm.module.css'
 
 class UploadForm extends Component{
     constructor(props){
@@ -81,19 +82,26 @@ class UploadForm extends Component{
 
     render(){
         return (
-            <div>
-                <p>Upload Form</p>
+            <div className={classes.mainDiv}>
                 <form onSubmit={this.submitHandler}>
-                    <input type="text" onChange={this.inputHandler} value={this.state.key} id="inputElement" className="form-control" placeholder="Type a key..."/>
-                    <input type="file" multiple onChange={this.fileHandler}/>
-                    <button type="submit">submit</button>
+                    <div className="row mx-2">
+                        <input type="text" onChange={this.inputHandler} value={this.state.key} id="inputElement" className={"form-control col-lg-6 col-md-8 col-sm-10 col-xs-10 "+classes.formInput} placeholder="Type a key..."/>
+                    </div>
+                    <div className={""+classes.downMainDiv}>
+                        <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 "+classes.downDiv}>
+                            <input type="file" multiple onChange={this.fileHandler} className={""+classes.inputFile}/>
+                            <button type="submit" className={"btn "+classes.submit}>submit</button>
+                        </div>
+                    </div>
                 </form>
                 {
                 this.state.show
                 ?
                 <>
-                <div className="progress">
-                    <div className="progress-bar" id="progressBar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{this.state.progress}%</div>
+                <div className={"row"} style={{width:"100%", justifyContent:"center", textAlign:"center", margin:"auto"}}>
+                    <div className="progress mt-3 col-lg-6 col-md-8 col-sm-10 col-xs-12">
+                        <div className="progress-bar" id="progressBar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{this.state.progress}%</div>
+                    </div>
                 </div>
                 <p>Files Uploaded : {this.state.count} / {this.state.files.length}</p>
                 </>

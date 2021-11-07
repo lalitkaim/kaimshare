@@ -1,0 +1,46 @@
+.mainDiv{
+    /* border: 1px solid black; */
+    position: absolute;
+    top: 35%;
+    width: 100%;
+    text-align: center;
+}
+.formInput{
+    margin: auto;
+    margin-bottom: 3vh;
+    border: 1px solid #525252;
+    box-shadow: 1px 1px 3px #525252;
+    border-radius: 0px;
+}
+.downMainDiv{
+    width: 100%;
+    /* border: 2px solid red; */
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    
+}
+.downDiv{
+    width: 100%;
+    /* border:2px solid blue; */
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: row;
+}
+.inputFile{
+    /* border:2px solid orange; */
+    /* box-shadow: 1px 1px 5px #525252; */
+    /* opacity: 0; */
+    cursor: pointer;
+}
+.submit{
+    display: block;
+    border: 1px solid #525252;
+    border-radius: 0px;
+    box-shadow: 1px 1px 3px #525252 ;
+    background-color: #5bd1d7;
+    color: #525252;
+    width: max-content;
+
+}

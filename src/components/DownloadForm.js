@@ -1,6 +1,7 @@
 import { getDoc, getFirestore, doc } from "@firebase/firestore";
 import { getStorage } from "@firebase/storage";
 import React, { Component } from "react";
+import classes from './DownloadForm.module.css'
 
 class DownloadForm extends Component{
     constructor(props){
@@ -41,33 +42,35 @@ class DownloadForm extends Component{
             return(
                 <tr key={index}>
                     <td>{this.state.names[index]}</td>
-                    <td>{this.state.size[index]}</td>
+                    <td>{Number.parseInt(this.state.size[index]/1024)}KB</td>
                     <td><a target="_blank" href={this.state.urls[index]}>Download</a></td>
                 </tr>
             )
         })
         return (
-            <>
-                <p>Download Files Page</p>
-                <form onSubmit={this.submitHandler}>
-                    <input type="text" onChange={this.inputHandler} value={this.state.key} id="inputElement" className="form-control" placeholder="Type a key..."/>
-                    <button type="submit">submit</button>
+            <div className={classes.mainDiv}>
+                <form onSubmit={this.submitHandler} className={classes.form}>
+                    <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 px-2 "+classes.innerDiv}>
+                        <input className={"form-control "+classes.formInput} type="text" onChange={this.inputHandler} value={this.state.key} placeholder="Type a key..."/>
+                        <button type="submit" className={"btn "+classes.submit}>submit</button>
+                    </div>    
                 </form>
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>File Name</th>
-                                <th>File Size</th>
-                                <th>Download</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {files ? files : null}
-                        </tbody>
-                    </table>
-                </div>
-            </>
+                {
+                this.state.urls.length>0 &&    
+                <table className="table table-hover table-striped table-sm mt-3">
+                    <thead className="thead">
+                        <tr>
+                            <th>File Name</th>
+                            <th>File Size</th>
+                            <th>Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {files ? files : null}
+                    </tbody>
+                </table>
+                }
+            </div>
         )
     }
 }
