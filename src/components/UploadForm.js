@@ -1,5 +1,5 @@
-import { getFirestore, doc, setDoc, getDoc, addDoc, collection} from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable} from 'firebase/storage'
+import { getFirestore, doc, setDoc, getDoc} from "firebase/firestore";
+import { getStorage, ref, getDownloadURL, uploadBytesResumable} from 'firebase/storage'
 import React, { Component } from "react";
 import { initialize } from './config'
 import classes from './UploadForm.module.css'
@@ -18,6 +18,7 @@ class UploadForm extends Component{
             names:[],
             size:[]
         }
+        this.textInput = React.createRef()
     }
 
     inputHandler=(event)=>{  
@@ -31,7 +32,6 @@ class UploadForm extends Component{
 
     submitHandler=(event)=>{
         event.preventDefault()
-        var track = 1;
         console.log(this.state.key)
         console.log(this.state.files)
         const db = getFirestore(initialize)
@@ -81,7 +81,7 @@ class UploadForm extends Component{
     }
 
     componentDidMount(){
-        console.log("didmount");
+        this.textInput.current.focus();
     }
 
     render(){
@@ -89,9 +89,9 @@ class UploadForm extends Component{
             <div className={classes.mainDiv}>
                 <form onSubmit={this.submitHandler}>
                     <div className="row mx-2">
-                        <input type="text" onChange={this.inputHandler} value={this.state.key} id="inputElement" className={"form-control col-lg-6 col-md-8 col-sm-10 col-xs-10 "+classes.formInput} placeholder="Enter Your Pointer . . . "/>
+                        <input type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} id="inputElement" className={"form-control col-lg-6 col-md-8 col-sm-10 col-xs-10 "+classes.formInput} placeholder="Enter Your Pointer . . . "/>
                     </div>
-                    <div className={""+classes.downMainDiv}>
+                    <div className={classes.downMainDiv}>
                         <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 "+classes.downDiv}>
                             <input type="file" multiple onChange={this.fileHandler} className={""+classes.inputFile}/>
                             <button type="submit" className={"btn "+classes.submit}>Upload</button>

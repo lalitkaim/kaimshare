@@ -1,5 +1,5 @@
 import { getDoc, getFirestore, doc } from "@firebase/firestore";
-import { getStorage } from "@firebase/storage";
+// import { getStorage } from "@firebase/storage";
 import React, { Component } from "react";
 import classes from './DownloadForm.module.css'
 
@@ -12,10 +12,11 @@ class DownloadForm extends Component{
             size:[],
             name:[]
         }
+        this.textInput = React.createRef();
     }
 
     componentDidMount(){
-
+        this.textInput.current.focus();
     }
 
     submitHandler=(event)=>{
@@ -51,7 +52,7 @@ class DownloadForm extends Component{
             <div className={classes.mainDiv}>
                 <form onSubmit={this.submitHandler} className={classes.form}>
                     <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 px-2 "+classes.innerDiv}>
-                        <input className={"form-control "+classes.formInput} type="text" onChange={this.inputHandler} value={this.state.key} placeholder="Enter Your Pointer . . . "/>
+                        <input className={"form-control "+classes.formInput} type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} placeholder="Enter Your Pointer . . . "/>
                         <button type="submit" className={"btn "+classes.submit}>Get Files</button>
                     </div>    
                 </form>
