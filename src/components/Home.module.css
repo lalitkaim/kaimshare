@@ -36,3 +36,7 @@ body{
     background-color: #5bd1d7;
     color: #525252;
 }
+.infoIcon{
+    border-radius: 40px 40px 90px 174px;
+    margin-left: 5%;
+}
