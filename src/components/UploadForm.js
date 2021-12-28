@@ -63,12 +63,16 @@ class UploadForm extends Component{
                                     names: [...prevState.names, metadata.metadata.name],
                                     size: [...prevState.size, metadata.metadata.size]
                                 }))
-                                setDoc(newRef, {names:this.state.names, size:this.state.size, urls : this.state.urls})
+                                setDoc(newRef, {names:this.state.names, size:this.state.size, urls : this.state.urls, created : Date.now()})
                                 this.setState({count:this.state.count+1});
+                                console.log("This is first ");
+                            })
+                        }).then(()=>{
+                            if(this.state.count==this.state.files.length){
                                 setTimeout(()=>{
                                     window.location="/uploadform"                                    
-                                }, 1500)
-                            })
+                                }, 500)
+                            }
                         })
                     }
                     );
@@ -88,12 +92,12 @@ class UploadForm extends Component{
         return (
             <div className={classes.mainDiv}>
                 <form onSubmit={this.submitHandler}>
-                    <div className="row mx-2">
+                    <div className="mx-2">
                         <input type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} id="inputElement" className={"form-control col-lg-6 col-md-8 col-sm-10 col-xs-10 "+classes.formInput} placeholder="Enter Your Pointer . . . "/>
                     </div>
-                    <div className={classes.downMainDiv}>
+                    <div className={"row mx-0 "+classes.downMainDiv}>
                         <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 "+classes.downDiv}>
-                            <input type="file" multiple onChange={this.fileHandler} className={""+classes.inputFile}/>
+                            <input type="file" multiple onChange={this.fileHandler} className={classes.inputFile}/>
                             <button type="submit" className={"btn "+classes.submit}>Upload</button>
                         </div>
                     </div>

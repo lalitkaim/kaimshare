@@ -16,9 +16,9 @@
     width: 100%;
     /* border: 2px solid red; */
     display: flex;
+    flex-wrap: wrap;
     text-align: center;
     justify-content: center;
-    
 }
 .downDiv{
     width: 100%;
@@ -27,6 +27,7 @@
     display: flex;
     flex-wrap: wrap;
     flex-flow: row;
+    align-items: center;
 }
 .inputFile{
     /* border:2px solid orange; */
@@ -42,6 +43,7 @@
     background-color: #5bd1d7;
     color: #525252;
     width: max-content;
+    /* margin: auto; */
 }
 .uploaded{
     width: 100vw;
