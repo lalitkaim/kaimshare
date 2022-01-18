@@ -51,7 +51,7 @@ class Home extends Component{
             <div>
                 <div>
                 <button type="button" className={"btn btn-primary animate__animated animate__bounce "+classes.infoIcon} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="fas fa-info" style={{fontSize:"30px"}}></i>
+                    <i class="fas fa-info" style={{fontSize:"30px"}}>:)</i>
                 </button>
                 </div>
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

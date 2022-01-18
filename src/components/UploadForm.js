@@ -70,7 +70,7 @@ class UploadForm extends Component{
                         }).then(()=>{
                             if(this.state.count==this.state.files.length){
                                 setTimeout(()=>{
-                                    window.location="/uploadform"                                    
+                                    window.location="/"                                    
                                 }, 500)
                             }
                         })
