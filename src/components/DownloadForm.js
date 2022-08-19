@@ -1,4 +1,4 @@
-import { getDoc, getFirestore, doc } from "@firebase/firestore";
+import { getDoc, getFirestore, doc, updateDoc } from "@firebase/firestore";
 import React, { Component } from "react";
 import classes from './DownloadForm.module.css'
 import Info from './Info'
@@ -10,7 +10,8 @@ class DownloadForm extends Component{
             key:'',
             urls:[],
             size:[],
-            name:[]
+            name:[],
+            visible:true
         }
         this.textInput = React.createRef();
     }
@@ -26,7 +27,14 @@ class DownloadForm extends Component{
         const docSnap = getDoc(newRef)
         docSnap.then(snap=>{
             if(snap.data()){
-                this.setState({urls:snap.data().urls, names:snap.data().names, size:snap.data().size})
+                this.setState({urls:snap.data().urls, names:snap.data().names, size:snap.data().size, visible:snap.data().visible}, ()=>{
+                    if(snap.data().oneTimeDownload && this.state.visible){
+                        updateDoc(newRef, {visible:false})  
+                    }else{
+                        if(snap.data().oneTimeDownload)
+                            alert("This pointer has been used")
+                    }
+                })
             }else{
                 alert("This Kaim ID doesn't exist :(")
             }
@@ -39,18 +47,17 @@ class DownloadForm extends Component{
 
     render(){
         let files = []
-        files = this.state.urls.map((url, index)=>{
-            return(
-                <tr key={index}>
-                    <td>{this.state.names[index]}</td>
-                    <td>{Number.parseInt(this.state.size[index]/1024)}KB</td>
-                    <td><a target="_blank" rel="noreferrer" href={this.state.urls[index]}>Download</a></td>
-                </tr>
-            )
-        })
+        if(this.state.visible)
+            files = this.state.urls.map((url, index)=>{
+                return(
+                    <tr key={index}>
+                        <td>{this.state.names[index]}</td>
+                        <td>{Number.parseInt(this.state.size[index]/1024)}KB</td>
+                        <td><a target="_blank" rel="noreferrer" href={this.state.urls[index]}>Download</a></td>
+                    </tr>
+                )
+            })
         return (
-            <>
-                {/* <Info/> */}
                 <div className={classes.mainDiv}>
                     <form onSubmit={this.submitHandler} className={classes.form}>
                         <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 px-2 "+classes.innerDiv}>
@@ -59,7 +66,7 @@ class DownloadForm extends Component{
                         </div>    
                     </form>
                     {
-                    this.state.urls.length>0 &&    
+                    this.state.urls.length>0 && this.state.visible &&   
                     <table className="table table-hover table-striped table-sm mt-3">
                         <thead className="thead">
                             <tr>
@@ -74,7 +81,6 @@ class DownloadForm extends Component{
                     </table>
                     }
                 </div>
-            </>
         )
     }
 }

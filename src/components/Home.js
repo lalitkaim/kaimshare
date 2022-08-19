@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classes from './Home.module.css'
 import { doc, getFirestore, collection, query, where, getDocs, deleteDoc } from "firebase/firestore";
-import { getStorage, ref, deleteObject, listAll } from "firebase/storage";
+import { getStorage, ref, deleteObject, listAll, connectStorageEmulator } from "firebase/storage";
 import 'animate.css';
 import Info from './Info';
 import Hit from './Hit';
@@ -41,7 +41,7 @@ class Home extends Component{
                     deleteDoc(doc(db, "key", mydoc.id));
                 })
                 .catch((error) => {
-                    console.log("we have error");
+                    console.log("Error :(");
                 });
             })
         })

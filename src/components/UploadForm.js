@@ -19,7 +19,7 @@ class UploadForm extends Component{
             names:[],
             size:[],
             hit:0,
-            onetimeDonwload:false
+            oneTimeDownload:false
         }
         this.textInput = React.createRef()
     }
@@ -30,6 +30,10 @@ class UploadForm extends Component{
 
     fileHandler=(event)=>{
         this.setState({files:event.target.files})
+    }
+
+    oneTimeHandler=(event)=>{
+        this.setState({oneTimeDownload:!this.state.oneTimeDownload})
     }
 
     submitHandler=(event)=>{
@@ -63,7 +67,7 @@ class UploadForm extends Component{
                                     names: [...prevState.names, metadata.metadata.name],
                                     size: [...prevState.size, metadata.metadata.size]
                                 }))
-                                setDoc(newRef, {names:this.state.names, size:this.state.size, urls : this.state.urls, created : Date.now()})
+                                setDoc(newRef, {names:this.state.names, size:this.state.size, urls : this.state.urls, created : Date.now() , oneTimeDownload:this.state.oneTimeDownload, visible:true})
                                 .then(()=>{ 
                                     this.setState({count:this.state.count+1});
                                     if(this.state.count==this.state.files.length){
@@ -82,7 +86,7 @@ class UploadForm extends Component{
             }
         })
         .catch(error=>{
-            console.log("catch"+error);
+            console.log("catch "+error);
         });
     }
 
@@ -106,6 +110,8 @@ class UploadForm extends Component{
                 {/* <Info/> */}
                 <div className={classes.mainDiv}>
                     <form onSubmit={this.submitHandler}>
+                        <input type="checkbox" id="oneTime" name="oneTime" value="oneTime" onClick={this.oneTimeHandler}/>
+                        <label htmlFor="oneTime"> &nbsp;One Time Download</label>
                         <div className="mx-2">
                             <input type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} id="inputElement" className={"form-control col-lg-6 col-md-8 col-sm-10 col-xs-10 "+classes.formInput} placeholder="Enter Your Pointer . . . "/>
                         </div>
