@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { initialize } from './config'
 import classes from './UploadForm.module.css'
 import 'animate.css';
+import Info from "./Info";
 
 class UploadForm extends Component{
     constructor(props){
@@ -16,7 +17,9 @@ class UploadForm extends Component{
             progres:0,
             urls:[],
             names:[],
-            size:[]
+            size:[],
+            hit:0,
+            onetimeDonwload:false
         }
         this.textInput = React.createRef()
     }
@@ -27,13 +30,10 @@ class UploadForm extends Component{
 
     fileHandler=(event)=>{
         this.setState({files:event.target.files})
-        console.log(this.state.files)
     }
 
     submitHandler=(event)=>{
         event.preventDefault()
-        console.log(this.state.key)
-        console.log(this.state.files)
         const db = getFirestore(initialize)
         const storage = getStorage()
         const newRef = doc(db, "key", this.state.key);
@@ -64,15 +64,17 @@ class UploadForm extends Component{
                                     size: [...prevState.size, metadata.metadata.size]
                                 }))
                                 setDoc(newRef, {names:this.state.names, size:this.state.size, urls : this.state.urls, created : Date.now()})
-                                this.setState({count:this.state.count+1});
-                                console.log("This is first ");
+                                .then(()=>{ 
+                                    this.setState({count:this.state.count+1});
+                                    if(this.state.count==this.state.files.length){
+                                        setTimeout(()=>{
+                                            const hitRef = doc(db, "hit", "hit")
+                                            setDoc(hitRef, {hit:this.state.hit+1})
+                                            window.location="/"                                    
+                                        }, 0)
+                                    }
+                                })
                             })
-                        }).then(()=>{
-                            if(this.state.count==this.state.files.length){
-                                setTimeout(()=>{
-                                    window.location="/"                                    
-                                }, 500)
-                            }
                         })
                     }
                     );
@@ -86,48 +88,61 @@ class UploadForm extends Component{
 
     componentDidMount(){
         this.textInput.current.focus();
+        const db = getFirestore(initialize)
+        const newRef = doc(db, "hit", "hit")
+        const docSnap = getDoc(newRef)
+        docSnap.then(snap=>{
+            if(snap.data()){
+                this.setState({hit:snap.data().hit})
+            }else{
+                alert("Unable to fetch total hit count")
+            }
+        })
     }
 
     render(){
         return (
-            <div className={classes.mainDiv}>
-                <form onSubmit={this.submitHandler}>
-                    <div className="mx-2">
-                        <input type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} id="inputElement" className={"form-control col-lg-6 col-md-8 col-sm-10 col-xs-10 "+classes.formInput} placeholder="Enter Your Pointer . . . "/>
-                    </div>
-                    <div className={"row mx-0 "+classes.downMainDiv}>
-                        <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 "+classes.downDiv}>
-                            <input type="file" multiple onChange={this.fileHandler} className={classes.inputFile}/>
-                            <button type="submit" className={"btn "+classes.submit}>Upload</button>
+            <>
+                {/* <Info/> */}
+                <div className={classes.mainDiv}>
+                    <form onSubmit={this.submitHandler}>
+                        <div className="mx-2">
+                            <input type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} id="inputElement" className={"form-control col-lg-6 col-md-8 col-sm-10 col-xs-10 "+classes.formInput} placeholder="Enter Your Pointer . . . "/>
                         </div>
-                    </div>
-                </form>
-                {
-                this.state.show
-                ?
-                <>
-                    <div className={"row"} style={{width:"100%", justifyContent:"center", textAlign:"center", margin:"auto"}}>
-                        <div className="progress mt-3 col-lg-6 col-md-8 col-sm-10 col-xs-12 p-0">
-                            <div className="progress-bar" id="progressBar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{this.state.progress}%</div>
+                        <div className={"row mx-0 "+classes.downMainDiv}>
+                            <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 "+classes.downDiv}>
+                                <input type="file" multiple onChange={this.fileHandler} className={classes.inputFile}/>
+                                <button type="submit" className={"btn "+classes.submit}>Upload</button>
+                            </div>
                         </div>
-                    </div>
-                    <p>Files Uploaded : {this.state.count} / {this.state.files.length}</p>
-                </>
-                :
-                null
-                }
-                {
-                    this.state.count>0 &&   this.state.count==this.state.files.length
+                    </form>
+                    {
+                    this.state.show
                     ?
-                    <div className={classes.uploaded}>
-                        <div>
-                            <h3 className="animate__animated animate__fadeOutUp">Successfully Uploaded</h3>
+                    <>
+                        <div className={"row"} style={{width:"100%", justifyContent:"center", textAlign:"center", margin:"auto"}}>
+                            <div className="progress mt-3 col-lg-6 col-md-8 col-sm-10 col-xs-12 p-0">
+                                <div className="progress-bar" id="progressBar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{this.state.progress}%</div>
+                            </div>
                         </div>
-                    </div>
+                        <p>Files Uploaded : {this.state.count} / {this.state.files.length}</p>
+                    </>
                     :
                     null
-                }
-            </div>
+                    }
+                    {
+                        this.state.count>0 &&   this.state.count==this.state.files.length
+                        ?
+                        <div className={classes.uploaded}>
+                            <div>
+                                <h3 className="animate__animated animate__fadeOutUp">Successfully Uploaded</h3>
+                            </div>
+                        </div>
+                        :
+                        null
+                    }
+                </div>
+            </>
         )
     }
 }
