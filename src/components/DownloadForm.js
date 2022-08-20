@@ -1,7 +1,6 @@
 import { getDoc, getFirestore, doc, updateDoc } from "@firebase/firestore";
 import React, { Component } from "react";
 import classes from './DownloadForm.module.css'
-import Info from './Info'
 
 class DownloadForm extends Component{
     constructor(props){

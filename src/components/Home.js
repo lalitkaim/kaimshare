@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import classes from './Home.module.css'
 import { doc, getFirestore, collection, query, where, getDocs, deleteDoc } from "firebase/firestore";
-import { getStorage, ref, deleteObject, listAll, connectStorageEmulator } from "firebase/storage";
+import { getStorage, ref, deleteObject, listAll } from "firebase/storage";
 import 'animate.css';
 import Info from './Info';
 import Hit from './Hit';
@@ -26,6 +26,7 @@ class Home extends Component{
         const db = getFirestore()
         const storage = getStorage();
         const q = query(collection(db, "key"), where("created", "<", Date.now()-604800000));
+        // const q = query(collection(db, "key"), where("names", "==","Your Lie In April.zip"));
         const querySnapshot =  getDocs(q);
         querySnapshot.then((docs)=>{
             docs.forEach(mydoc=>{

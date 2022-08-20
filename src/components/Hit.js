@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { getFirestore, doc, setDoc, getDoc} from "firebase/firestore";
-import { getStorage, ref, getDownloadURL, uploadBytesResumable} from 'firebase/storage'
+import { getFirestore, doc, getDoc} from "firebase/firestore";
 import { initialize } from './config'
 import classes from './Hit.module.css'
 
 class Hit extends Component{
+
     constructor(props){
         super(props)
         this.state={
@@ -13,7 +13,6 @@ class Hit extends Component{
     }
 
     componentDidMount(){
-        console.log("component did mount")
         const db = getFirestore(initialize)
         const newRef = doc(db, "hit", "hit")
         const docSnap = getDoc(newRef)
@@ -21,13 +20,9 @@ class Hit extends Component{
             if(snap.data()){
                 this.setState({hit:snap.data().hit})
             }else{
-                alert("Unable to fetch total hit count")
+                alert("Unable to fetch hit count")
             }
         })
-    }
-
-    componentDidUpdate(){
-        console.log("component did upadate")
     }
 
     render(){
@@ -35,7 +30,12 @@ class Hit extends Component{
             {
             this.state.hit ?
             <>
-                Total Hits : {this.state.hit} 
+                <section>
+                    <div className={classes.content}>
+                        <p>Total Hits : {this.state.hit} </p>
+                        <p>Total Hits : {this.state.hit} </p>
+                    </div>
+                </section>
             </>
             : null
             }

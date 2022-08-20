@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { initialize } from './config'
 import classes from './UploadForm.module.css'
 import 'animate.css';
-import Info from "./Info";
+import Contribute from "./Contribute";
 
 class UploadForm extends Component{
     constructor(props){
@@ -62,22 +62,25 @@ class UploadForm extends Component{
                         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
                             uploadTask.then(metadata=>{
                                 const newRef = doc(db, "key", this.state.key)
-                                this.state.urls[this.state.count] = downloadURL
                                 this.setState(prevState => ({
                                     names: [...prevState.names, metadata.metadata.name],
-                                    size: [...prevState.size, metadata.metadata.size]
+                                    size: [...prevState.size, metadata.metadata.size],
+                                    urls : [...prevState.urls, downloadURL]
                                 }))
-                                setDoc(newRef, {names:this.state.names, size:this.state.size, urls : this.state.urls, created : Date.now() , oneTimeDownload:this.state.oneTimeDownload, visible:true})
-                                .then(()=>{ 
-                                    this.setState({count:this.state.count+1});
-                                    if(this.state.count==this.state.files.length){
+                                this.setState({count:this.state.count+1});
+                                if(this.state.count==this.state.files.length){
+                                    setDoc(newRef, {names:this.state.names, size:this.state.size, urls : this.state.urls, created : Date.now() , oneTimeDownload:this.state.oneTimeDownload, visible:true})
+                                    .then(()=>{ 
                                         setTimeout(()=>{
                                             const hitRef = doc(db, "hit", "hit")
                                             setDoc(hitRef, {hit:this.state.hit+1})
-                                            window.location="/"                                    
+                                            document.getElementById("contributeButton").click()
+                                            // window.location="/"                                    
                                         }, 0)
-                                    }
-                                })
+                                    }).catch(error=>{
+                                        console.log("catch "+error);
+                                    })
+                                }
                             })
                         })
                     }
@@ -106,8 +109,12 @@ class UploadForm extends Component{
 
     render(){
         return (
-            <>
-                {/* <Info/> */}
+            <>  
+                <div>
+                    <button id="contributeButton" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" style={{display:"none"}}>
+                    </button>
+                </div>
+                <Contribute/>
                 <div className={classes.mainDiv}>
                     <form onSubmit={this.submitHandler}>
                         <input type="checkbox" id="oneTime" name="oneTime" value="oneTime" onClick={this.oneTimeHandler}/>
