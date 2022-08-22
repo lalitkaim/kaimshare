@@ -44,7 +44,7 @@ class UploadForm extends Component{
         const docSnap = getDoc(newRef);
         docSnap.then((docSnapshot) => {
             if(docSnapshot.data()) {
-                alert("Please choose a different key :)")
+                alert("Please Choose A Different Thought")
             } else {
                 for(var i=0;i<this.state.files.length;i++){
                     const storageRef = ref(storage, this.state.key+"/"+this.state.files[i].name)
@@ -71,12 +71,12 @@ class UploadForm extends Component{
                                 if(this.state.count==this.state.files.length){
                                     setDoc(newRef, {names:this.state.names, size:this.state.size, urls : this.state.urls, created : Date.now() , oneTimeDownload:this.state.oneTimeDownload, visible:true})
                                     .then(()=>{ 
+                                        const hitRef = doc(db, "hit", "hit")
+                                        setDoc(hitRef, {hit:this.state.hit+1})
+                                        document.getElementById("contributeButton").click()
                                         setTimeout(()=>{
-                                            const hitRef = doc(db, "hit", "hit")
-                                            setDoc(hitRef, {hit:this.state.hit+1})
-                                            document.getElementById("contributeButton").click()
-                                            // window.location="/"                                    
-                                        }, 0)
+                                            window.location="/"                                    
+                                        }, 60000)
                                     }).catch(error=>{
                                         console.log("catch "+error);
                                     })
@@ -91,6 +91,10 @@ class UploadForm extends Component{
         .catch(error=>{
             console.log("catch "+error);
         });
+    }
+
+    uploadedHandler = ()=>{
+        window.location="/"                                    
     }
 
     componentDidMount(){
@@ -120,7 +124,7 @@ class UploadForm extends Component{
                         <input type="checkbox" id="oneTime" name="oneTime" value="oneTime" onClick={this.oneTimeHandler}/>
                         <label htmlFor="oneTime"> &nbsp;One Time Download</label>
                         <div className="mx-2">
-                            <input type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} id="inputElement" className={"form-control col-lg-6 col-md-8 col-sm-10 col-xs-10 "+classes.formInput} placeholder="Enter Your Pointer . . . "/>
+                            <input type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} id="inputElement" className={"form-control col-lg-6 col-md-8 col-sm-10 col-xs-10 "+classes.formInput} placeholder="Enter Your Currect Thought . . . "/>
                         </div>
                         <div className={"row mx-0 "+classes.downMainDiv}>
                             <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 "+classes.downDiv}>
@@ -146,7 +150,7 @@ class UploadForm extends Component{
                     {
                         this.state.count>0 &&   this.state.count==this.state.files.length
                         ?
-                        <div className={classes.uploaded}>
+                        <div className={classes.uploaded} onClick={this.uploadedHandler}>
                             <div>
                                 <h3 className="animate__animated animate__fadeOutUp">Successfully Uploaded</h3>
                             </div>

@@ -31,11 +31,11 @@ class DownloadForm extends Component{
                         updateDoc(newRef, {visible:false})  
                     }else{
                         if(snap.data().oneTimeDownload)
-                            alert("This pointer has been used")
+                            alert("Thought already has been stolen :(")
                     }
                 })
             }else{
-                alert("This Kaim ID doesn't exist :(")
+                alert("Doesn't Exist, Make It Your Thought Now :)")
             }
         })
     }
@@ -60,7 +60,7 @@ class DownloadForm extends Component{
                 <div className={classes.mainDiv}>
                     <form onSubmit={this.submitHandler} className={classes.form}>
                         <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 px-2 "+classes.innerDiv}>
-                            <input className={"form-control "+classes.formInput} type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} placeholder="Enter Your Pointer . . . "/>
+                            <input className={"form-control "+classes.formInput} type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} placeholder="Forgot Your Thought ?"/>
                             <button type="submit" className={"btn "+classes.submit}>Get Files</button>
                         </div>    
                     </form>

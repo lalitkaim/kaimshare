@@ -26,7 +26,6 @@ class Home extends Component{
         const db = getFirestore()
         const storage = getStorage();
         const q = query(collection(db, "key"), where("created", "<", Date.now()-604800000));
-        // const q = query(collection(db, "key"), where("names", "==","Your Lie In April.zip"));
         const querySnapshot =  getDocs(q);
         querySnapshot.then((docs)=>{
             docs.forEach(mydoc=>{

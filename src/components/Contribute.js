@@ -7,12 +7,11 @@ class Contribute extends Component{
 
     render(){
         return <>
-            <canvas id="canvas"></canvas>
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title m-auto" id="exampleModalLabel">Thank You for using Kaimshare</h5>
+                            <h5 className="modal-title m-auto" id="exampleModalLabel" style={{color:"#03a9f4"}}>Thank You for using Kaimshare</h5>
                             <button type="button" className={"btn-close "+classes.closeButton} data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body text-center">
