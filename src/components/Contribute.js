@@ -5,6 +5,10 @@ import icici from '../icici.svg'
 
 class Contribute extends Component{
 
+    goToHome=(event)=>{
+        window.location="/"
+    }
+
     render(){
         return <>
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -12,7 +16,7 @@ class Contribute extends Component{
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title m-auto" id="exampleModalLabel" style={{color:"#03a9f4"}}>Thank You for using Kaimshare</h5>
-                            <button type="button" className={"btn-close "+classes.closeButton} data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" className={"btn-close "+classes.closeButton} data-bs-dismiss="modal" aria-label="Close" onClick={this.goToHome}></button>
                         </div>
                         <div className="modal-body text-center">
                             <p>Contribute or Use it again</p>

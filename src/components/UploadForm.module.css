@@ -29,6 +29,15 @@
     flex-flow: row;
     align-items: center;
 }
+.linkDiv{
+    width: 100%;
+    /* border:2px solid blue; */
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: row;
+    align-items: center;
+}
 .inputFile{
     /* border:2px solid orange; */
     /* box-shadow: 1px 1px 5px #525252; */
@@ -43,6 +52,7 @@
     background-color: #5bd1d7;
     color: #525252;
     width: max-content;
+    white-space: nowrap;
     /* margin: auto; */
 }
 .uploaded{

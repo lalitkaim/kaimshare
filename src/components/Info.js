@@ -16,23 +16,40 @@ function Info(){
                     </div>
                     <div className="modal-body">
                         <h5>What is it?</h5>
-                        <p>Kaimshare is a free website which can be used to share files.</p>
+                        <p>Kaimshare is a free website which can be used to share files/link.</p>
                         <h5>How to use?</h5>
                         <ul>
-                            <li>
-                                To <b>download</b> a file or files simply click on Download Form button, 
-                                write down the Kaim ID and click on Get Files.
+                            <li> Share File
+                                <ul>
+                                    <li>
+                                    To <b>download</b> a file or  simply click on Get Form button, 
+                                write down the thought (unique ID) and click submit.
+                                    </li>
+                                    <li>
+                                    To <b>upload</b> a file or files simply click on the Send Form button,
+                                write down the thought (unique ID), click Share File and choose files you want to upload and click on Upload.
+                                    </li>
+                                </ul>
                             </li>
-                            <li>
-                                To <b>upload</b> a file or files simply click on the Upload Form button,
-                                write down the Kaim ID and choose files you wanna upload and click on Upload.
+                            <li> Share Link
+                                <ul>
+                                    <li>
+                                    To <b>get link</b> simply click on the Get Form button,
+                                write down the thought (unique ID), and click submit. You'll be redirected to respective URL.
+                                    </li>
+                                    <li>
+                                    To <b>share link</b> simply click on the Send Form button,
+                                write down the thought (unique ID), click Share Link and paste link and click on Link it.
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                         <h5>Features</h5>
                         <ul>
                             <li>You can upload any size of file.</li>
+                            <li>You can share URLs easily.</li>
                             <li>The files will be deleted automatically after one week of upload</li>
-                            <li>You can't upload files on used Kaim ID (Please wait for a week to use it again)</li>
+                            <li>You can't upload files on used thought (unique ID) (Please wait for a week to use it again)</li>
                         </ul>
                         <h5>How to contribute?</h5>
                         <ul>

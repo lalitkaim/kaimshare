@@ -10,7 +10,9 @@ class DownloadForm extends Component{
             urls:[],
             size:[],
             name:[],
-            visible:true
+            visible:true,
+            isLink:false,
+            link:''
         }
         this.textInput = React.createRef();
     }
@@ -26,9 +28,19 @@ class DownloadForm extends Component{
         const docSnap = getDoc(newRef)
         docSnap.then(snap=>{
             if(snap.data()){
+                if(snap.data().isLink){
+                    if(snap.data().oneTimeDownload && snap.data().visible){
+                        updateDoc(newRef, {visible:false})
+                        .then(()=>{
+                            window.location.href=snap.data().link
+                        })
+                    }else{
+                        window.location.href=snap.data().link
+                    }
+                }
                 this.setState({urls:snap.data().urls, names:snap.data().names, size:snap.data().size, visible:snap.data().visible}, ()=>{
                     if(snap.data().oneTimeDownload && this.state.visible){
-                        updateDoc(newRef, {visible:false})  
+                        updateDoc(newRef, {visible:false})
                     }else{
                         if(snap.data().oneTimeDownload)
                             alert("Thought already has been stolen :(")
@@ -46,7 +58,7 @@ class DownloadForm extends Component{
 
     render(){
         let files = []
-        if(this.state.visible)
+        if(this.state.visible && !this.state.isLink)
             files = this.state.urls.map((url, index)=>{
                 return(
                     <tr key={index}>
@@ -61,11 +73,11 @@ class DownloadForm extends Component{
                     <form onSubmit={this.submitHandler} className={classes.form}>
                         <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 px-2 "+classes.innerDiv}>
                             <input className={"form-control "+classes.formInput} type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} placeholder="Forgot Your Thought ?"/>
-                            <button type="submit" className={"btn "+classes.submit}>Get Files</button>
+                            <button type="submit" className={"btn "+classes.submit}>Submit</button>
                         </div>    
                     </form>
                     {
-                    this.state.urls.length>0 && this.state.visible &&   
+                    !this.state.isLink && this.state.urls.length>0 && this.state.visible &&
                     <table className="table table-hover table-striped table-sm mt-3">
                         <thead className="thead">
                             <tr>

@@ -56,8 +56,8 @@ class Home extends Component{
                     <Hit/>
                 </div>
                 <div className={classes.buttonDiv}>
-                    <button onClick={this.downloadHandler} className={"btn "+classes.button1}>Download Form</button>
-                    <button onClick={this.uploadHandler} className={"btn "+classes.button2}>Upload Form</button>
+                    <button onClick={this.downloadHandler} className={"btn "+classes.button1}>Get Form</button>
+                    <button onClick={this.uploadHandler} className={"btn "+classes.button2}>Send Form</button>
                 </div>
             </div>
         )
