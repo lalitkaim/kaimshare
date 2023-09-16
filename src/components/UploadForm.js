@@ -170,12 +170,12 @@ class UploadForm extends Component{
                         <input type="text" ref={this.textInput} onChange={this.inputHandler} value={this.state.key} id="inputElement" className={"form-control col-lg-6 col-md-8 col-sm-10 col-xs-10 "+classes.formInput} placeholder="Enter Your Current Thought . . . "/>
                     </div>
                     <p className="d-inline-flex gap-1">
-                        <a className="btn btn-primary" data-bs-toggle="collapse " href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1" onClick={this.toggleFile}>
+                        <button className="btn btn-primary" data-bs-toggle="collapse " role="button" aria-expanded="false" aria-controls="collapseExample1" onClick={this.toggleFile}>
                             Share File
-                        </a>
-                        <a className="btn btn-primary" data-bs-toggle="collapse " href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2" onClick={this.toggleLink}>
-                            Share Link
-                        </a>
+                        </button>
+                        <button className="btn btn-primary" data-bs-toggle="collapse " role="button" aria-expanded="false" aria-controls="collapseExample2" onClick={this.toggleLink}>
+                            Share Text
+                        </button>
                     </p>
                     {
                     (showFile || showLink) && 
@@ -198,7 +198,7 @@ class UploadForm extends Component{
                         <form onSubmit={this.linkSubmitHandler}>
                             <div className={"row mx-0 "+classes.downMainDiv}>
                                 <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 "+classes.linkDiv}>
-                                    <input type="text" multiple onChange={this.linkHandler} className="form-control me-1" placeholder="Paste link here . . ."/>
+                                    <input type="text" multiple onChange={this.linkHandler} className="form-control me-1" placeholder="Paste text here . . ."/>
                                     <button type="submit" className={"btn "+classes.submit}>Link it</button>
                                 </div>
                             </div>

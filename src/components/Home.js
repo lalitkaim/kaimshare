@@ -15,11 +15,11 @@ class Home extends Component{
     }
 
     downloadHandler = (event)=>{
-        window.location.href="/downloadform"
+        window.location.href="/getit"
     }
 
     uploadHandler = (event)=>{
-        window.location.href="/uploadform"
+        window.location.href="/sendit"
     }
 
     componentDidMount(){

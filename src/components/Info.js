@@ -31,15 +31,15 @@ function Info(){
                                     </li>
                                 </ul>
                             </li>
-                            <li> Share Link
+                            <li> Share Text
                                 <ul>
                                     <li>
-                                    To <b>get link</b> simply click on the Get Form button,
-                                write down the thought (unique ID), and click submit. You'll be redirected to respective URL.
+                                    To <b>get text</b> simply click on the Get Form button,
+                                write down the thought (unique ID), and click submit. The linked text will be on screen.
                                     </li>
                                     <li>
-                                    To <b>share link</b> simply click on the Send Form button,
-                                write down the thought (unique ID), click Share Link and paste link and click on Link it.
+                                    To <b>share text</b> simply click on the Send Form button,
+                                write down the thought (unique ID), click Share Text and paste text and click on Link it.
                                     </li>
                                 </ul>
                             </li>
@@ -47,7 +47,7 @@ function Info(){
                         <h5>Features</h5>
                         <ul>
                             <li>You can upload any size of file.</li>
-                            <li>You can share URLs easily.</li>
+                            <li>You can share text/url easily.</li>
                             <li>The files will be deleted automatically after one week of upload</li>
                             <li>You can't upload files on used thought (unique ID) (Please wait for a week to use it again)</li>
                         </ul>

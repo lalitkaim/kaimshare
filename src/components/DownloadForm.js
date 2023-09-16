@@ -11,7 +11,6 @@ class DownloadForm extends Component{
             size:[],
             name:[],
             visible:true,
-            isLink:false,
             link:''
         }
         this.textInput = React.createRef();
@@ -19,6 +18,11 @@ class DownloadForm extends Component{
 
     componentDidMount(){
         this.textInput.current.focus();
+    }
+
+    copyURLHandler=(event)=>{
+        event.preventDefault()
+        navigator.clipboard.writeText(this.state.link);
     }
 
     submitHandler=(event)=>{
@@ -32,13 +36,13 @@ class DownloadForm extends Component{
                     if(snap.data().oneTimeDownload && snap.data().visible){
                         updateDoc(newRef, {visible:false})
                         .then(()=>{
-                            window.location.href=snap.data().link
+                            document.getElementById("linkButton").click();
                         })
                     }else{
-                        window.location.href=snap.data().link
+                        document.getElementById("linkButton").click();
                     }
                 }
-                this.setState({urls:snap.data().urls, names:snap.data().names, size:snap.data().size, visible:snap.data().visible}, ()=>{
+                this.setState({urls:snap.data().urls, names:snap.data().names, size:snap.data().size, visible:snap.data().visible, link:snap.data().link}, ()=>{
                     if(snap.data().oneTimeDownload && this.state.visible){
                         updateDoc(newRef, {visible:false})
                     }else{
@@ -58,7 +62,7 @@ class DownloadForm extends Component{
 
     render(){
         let files = []
-        if(this.state.visible && !this.state.isLink)
+        if(this.state.visible)
             files = this.state.urls.map((url, index)=>{
                 return(
                     <tr key={index}>
@@ -69,6 +73,7 @@ class DownloadForm extends Component{
                 )
             })
         return (
+            <>
                 <div className={classes.mainDiv}>
                     <form onSubmit={this.submitHandler} className={classes.form}>
                         <div className={"col-lg-6 col-md-8 col-sm-10 col-xs-12 px-2 "+classes.innerDiv}>
@@ -77,7 +82,7 @@ class DownloadForm extends Component{
                         </div>    
                     </form>
                     {
-                    !this.state.isLink && this.state.urls.length>0 && this.state.visible &&
+                    this.state.urls.length>0 && this.state.visible &&
                     <table className="table table-hover table-striped table-sm mt-3">
                         <thead className="thead">
                             <tr>
@@ -92,6 +97,29 @@ class DownloadForm extends Component{
                     </table>
                     }
                 </div>
+                <div>
+                    <button type="button" className="btn btn-primary invisible" data-bs-toggle="modal" data-bs-target="#myModal" id="linkButton">
+                    </button>
+                    <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                        {/* <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLongTitle">Linked Text !</h5>
+                            <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div> */}
+                        <div className="modal-body">
+                            {this.state.link}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-primary" onClick={this.copyURLHandler} data-bs-dismiss="modal" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to clipboard">Copy Text</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </>
         )
     }
 }
