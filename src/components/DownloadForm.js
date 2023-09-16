@@ -10,7 +10,9 @@ class DownloadForm extends Component{
             urls:[],
             size:[],
             name:[],
+            oneTimeDownload:false,
             visible:true,
+            isLink:false,
             link:''
         }
         this.textInput = React.createRef();
@@ -32,22 +34,20 @@ class DownloadForm extends Component{
         const docSnap = getDoc(newRef)
         docSnap.then(snap=>{
             if(snap.data()){
-                if(snap.data().isLink){
-                    if(snap.data().oneTimeDownload && snap.data().visible){
-                        updateDoc(newRef, {visible:false})
-                        .then(()=>{
-                            document.getElementById("linkButton").click();
-                        })
+                this.setState({urls:snap.data().urls, names:snap.data().names, size:snap.data().size, visible:snap.data().visible, oneTimeDownload: snap.data().oneTimeDownload, isLink:snap.data().isLink, link:snap.data().link}, ()=>{
+                    if(this.state.visible){
+                        if(this.state.oneTimeDownload){
+                            updateDoc(newRef, {visible:false})
+                            .then(()=>{
+                                if(this.state.isLink)
+                                    document.getElementById("linkButton").click();
+                            })
+                        }else{
+                            if(this.state.isLink)
+                                document.getElementById("linkButton").click();
+                        }
                     }else{
-                        document.getElementById("linkButton").click();
-                    }
-                }
-                this.setState({urls:snap.data().urls, names:snap.data().names, size:snap.data().size, visible:snap.data().visible, link:snap.data().link}, ()=>{
-                    if(snap.data().oneTimeDownload && this.state.visible){
-                        updateDoc(newRef, {visible:false})
-                    }else{
-                        if(snap.data().oneTimeDownload)
-                            alert("Thought already has been stolen :(")
+                        alert("Thought already has been stolen :(")
                     }
                 })
             }else{
@@ -62,7 +62,7 @@ class DownloadForm extends Component{
 
     render(){
         let files = []
-        if(this.state.visible)
+        if(this.state.visible && !this.state.isLink)
             files = this.state.urls.map((url, index)=>{
                 return(
                     <tr key={index}>
@@ -103,12 +103,6 @@ class DownloadForm extends Component{
                     <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">
-                        {/* <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">Linked Text !</h5>
-                            <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div> */}
                         <div className="modal-body">
                             {this.state.link}
                         </div>
